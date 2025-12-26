@@ -232,17 +232,18 @@ def compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombres
  extensions = listerCalculsElaborablesAvecDeuxDesNombresDuneCollection(collectionNombresDisponibles)
  cpt = 0
  while(cpt<len(extensions)):
- 
-  sequenceAgrandie = []
-  copierSequenceCalculs(sequence,sequenceAgrandie)
+  sequenceAgrandie=sequence
   sequenceAgrandie.append(extensions[cpt])
-
   res=res+1
-  estExtensible = len(listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequenceAgrandie))>1
+  
+  estExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
   if(estExtensible == True): 
    res=res + compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombresInitiaux, sequenceAgrandie)
+  
+  sequenceAgrandie.pop() 
   cpt=cpt+1
- return res 
+ 
+ return res  
 
 
 def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequence, sequenceApprochee, collectionNombresInitiaux, resultatCible):
@@ -276,31 +277,30 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
   res=sequenceApprochee
  
  while(cpt<len(extensions)):
-  # sequenceAgrandie=sequence
-  # sequenceAgrandie.append(extensions[cpt]) 
-
-  sequenceAgrandie = []
-  copierSequenceCalculs(sequence,sequenceAgrandie)
-  sequenceAgrandie.append(extensions[cpt])
-   
+  sequenceAgrandie=sequence
+  sequenceAgrandie.append(extensions[cpt]) 
   
-  estExtensible =len(listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequenceAgrandie))>1
-
+  sequenceAgrandieEstExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
+  
   ecartEntreresultatCibleEtSequenceAgrandie = abs(resultatCible - realiserCalcul(sequenceAgrandie[len(sequenceAgrandie)-1]))
   ecartEntreresultatCibleEtSequenceApprochee = abs(resultatCible - realiserCalcul(sequenceApprochee[len(sequenceApprochee)-1]))
+  
+  #sequenceAgrandieEstPlusProcheQueSequenceApprochee = int(min(ecartEntreresultatCibleEtSequenceAgrandie,  ecartEntreresultatCibleEtSequenceApprochee)) == int(ecartEntreresultatCibleEtSequenceAgrandie)
   sequenceAgrandieEstPlusProcheQueSequenceApprochee = int(ecartEntreresultatCibleEtSequenceAgrandie) < int(ecartEntreresultatCibleEtSequenceApprochee)
 
   if(sequenceAgrandieEstPlusProcheQueSequenceApprochee == True):
    copierSequenceCalculs(sequenceAgrandie,sequenceApprochee)
   
-  if(estExtensible == True): 
+  if(sequenceAgrandieEstExtensible == True): 
    indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenceAgrandie, sequenceApprochee, collectionNombresInitiaux, resultatCible)
     
-  # sequenceAgrandie.pop() 
+  sequenceAgrandie.pop() 
   cpt=cpt+1
   
  res=sequenceApprochee  
  return res  
+
+
 
 
 # ==========================
@@ -315,6 +315,16 @@ res = indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],[]
 duree = time.time() - start
 print("durée indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
 print("résultat indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+str(res))
+
+
+collectionNombresInitiaux= [1,2,3,4,5,6]
+resultatCible = 1080
+start = time.time()
+res = indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],[],collectionNombresInitiaux, resultatCible)
+duree = time.time() - start
+print("durée indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
+print("résultat indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+str(res))
+
 
 
 
