@@ -235,8 +235,8 @@ def compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombres
   sequenceAgrandie=sequence
   sequenceAgrandie.append(extensions[cpt])
   res=res+1
-  
-  estExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
+  estExtensible = len(listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequenceAgrandie))>1
+  # estExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
   if(estExtensible == True): 
    res=res + compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombresInitiaux, sequenceAgrandie)
   
