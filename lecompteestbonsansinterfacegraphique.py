@@ -236,13 +236,10 @@ def compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombres
   sequenceAgrandie.append(extensions[cpt])
   res=res+1
   estExtensible = len(listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequenceAgrandie))>1
-  # estExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
   if(estExtensible == True): 
    res=res + compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombresInitiaux, sequenceAgrandie)
-  
   sequenceAgrandie.pop() 
   cpt=cpt+1
- 
  return res 
 
 
@@ -280,18 +277,16 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
   sequenceAgrandie=sequence
   sequenceAgrandie.append(extensions[cpt]) 
   
-  sequenceAgrandieEstExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
-  
+  estExtensible =len(listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequenceAgrandie))>1
+
   ecartEntreresultatCibleEtSequenceAgrandie = abs(resultatCible - realiserCalcul(sequenceAgrandie[len(sequenceAgrandie)-1]))
   ecartEntreresultatCibleEtSequenceApprochee = abs(resultatCible - realiserCalcul(sequenceApprochee[len(sequenceApprochee)-1]))
-  
-  #sequenceAgrandieEstPlusProcheQueSequenceApprochee = int(min(ecartEntreresultatCibleEtSequenceAgrandie,  ecartEntreresultatCibleEtSequenceApprochee)) == int(ecartEntreresultatCibleEtSequenceAgrandie)
   sequenceAgrandieEstPlusProcheQueSequenceApprochee = int(ecartEntreresultatCibleEtSequenceAgrandie) < int(ecartEntreresultatCibleEtSequenceApprochee)
 
   if(sequenceAgrandieEstPlusProcheQueSequenceApprochee == True):
    copierSequenceCalculs(sequenceAgrandie,sequenceApprochee)
   
-  if(sequenceAgrandieEstExtensible == True): 
+  if(estExtensible == True): 
    indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenceAgrandie, sequenceApprochee, collectionNombresInitiaux, resultatCible)
     
   sequenceAgrandie.pop() 
