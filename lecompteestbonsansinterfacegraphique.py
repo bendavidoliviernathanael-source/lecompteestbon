@@ -232,13 +232,15 @@ def compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombres
  extensions = listerCalculsElaborablesAvecDeuxDesNombresDuneCollection(collectionNombresDisponibles)
  cpt = 0
  while(cpt<len(extensions)):
-  sequenceAgrandie=sequence
+ 
+  sequenceAgrandie = []
+  copierSequenceCalculs(sequence,sequenceAgrandie)
   sequenceAgrandie.append(extensions[cpt])
+
   res=res+1
   estExtensible = len(listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequenceAgrandie))>1
   if(estExtensible == True): 
    res=res + compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombresInitiaux, sequenceAgrandie)
-  sequenceAgrandie.pop() 
   cpt=cpt+1
  return res 
 
@@ -274,8 +276,13 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
   res=sequenceApprochee
  
  while(cpt<len(extensions)):
-  sequenceAgrandie=sequence
-  sequenceAgrandie.append(extensions[cpt]) 
+  # sequenceAgrandie=sequence
+  # sequenceAgrandie.append(extensions[cpt]) 
+
+  sequenceAgrandie = []
+  copierSequenceCalculs(sequence,sequenceAgrandie)
+  sequenceAgrandie.append(extensions[cpt])
+   
   
   estExtensible =len(listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequenceAgrandie))>1
 
@@ -289,7 +296,7 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
   if(estExtensible == True): 
    indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenceAgrandie, sequenceApprochee, collectionNombresInitiaux, resultatCible)
     
-  sequenceAgrandie.pop() 
+  # sequenceAgrandie.pop() 
   cpt=cpt+1
   
  res=sequenceApprochee  
