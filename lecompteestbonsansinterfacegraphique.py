@@ -426,7 +426,7 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
 
 
 collectionNombresInitiaux= [1,2,3,4,5,6]
-resultatCible = 1080
+resultatCible = 1081
 start = time.time()
 res = indiquerUneSequenceSolutionParExtensionDuneSequence([], collectionNombresInitiaux, resultatCible)
 duree = time.time() - start
