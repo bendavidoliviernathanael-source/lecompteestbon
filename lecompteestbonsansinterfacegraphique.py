@@ -238,6 +238,51 @@ def obtenirUneDescriptionDuneSolution(solution, collectionNombresInitiaux, resul
 # CHERCHER DES SOLUTIONS
 # ==========================
 
+
+def indiquerUneSequenceSolutionParExtensionDuneSequence(sequence, collectionNombresInitiaux, resultatCible):
+ """
+ Indication d'une séquence de calculs élaborable en agrandissant une séquence élaborée avec une collection de nombres initiaux dont le dernier calcul a pour résultat un résultat choisi
+
+ Requis :
+ -sequence --> une sequence de calculs
+ ex : [[1,1,"+"],[1,2,"+"]]
+ -collectionNombresInitiaux --> une collection de nombres
+ ex : [1,2,3,4,5,6]
+ -resultatCible --> un nombre
+ ex : 2, 3 
+ 
+ Fourni : 
+ -une sequence de calcul
+ ex: [[[1,1,"+"],[1,2,"+"]], [[1,1,"+"],[2,1,"+"]], [[1,1,"/"],[1,1,"+"],[1,2,"+"]]]
+
+ >>> indiquerUneSequenceSolutionParExtensionDuneSequence([[1, 1, '+']], [1,1,1], 3)
+ [[1, 1, '+'], [1, 2, '+']]
+ """
+ res = []
+ collectionNombresDisponibles = listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequence)
+ extensions = listerCalculsElaborablesAvecDeuxDesNombresDuneCollection(collectionNombresDisponibles)
+ cpt = 0
+ while(cpt<len(extensions)):
+  sequenceAgrandie=sequence
+  sequenceAgrandie.append(extensions[cpt])
+  
+  estSolution = realiserCalcul(sequenceAgrandie[len(sequenceAgrandie)-1]) == resultatCible
+  estExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
+  
+  if(estSolution == True) :
+   res=sequenceAgrandie
+   return res
+  if(estExtensible == True and len(res)==0): 
+   res.extend(indiquerUneSequenceSolutionParExtensionDuneSequence(sequenceAgrandie, collectionNombresInitiaux, resultatCible))
+   if(len(res)>0):
+    return res
+  
+  sequenceAgrandie.pop() 
+  cpt=cpt+1
+ 
+ return res  
+
+
 def listerSequencesSolutions(sequence, collectionNombresInitiaux, resultatCible):
  """
  Énumération des séquences de calculs élaborables en agrandissant une séquence élaborée avec une collection de nombres initiaux dont le dernier calcul a pour résultat un résultat choisi
@@ -353,31 +398,42 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
 # ==========================
 
 #utilisation de la méthode indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequence, sequenceApprochee, collectionNombresInitiaux, resultatCible)
-collectionNombresInitiaux= [1,1,1,1]
-resultatCible = 1080
-start = time.time()
-res = indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],[],collectionNombresInitiaux, resultatCible)
-duree = time.time() - start
-print("durée indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
-print("résultat indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+str(res))
-print(obtenirUneDescriptionDuneSolution(res, collectionNombresInitiaux,resultatCible))
+# collectionNombresInitiaux= [1,1,1,1]
+# resultatCible = 1080
+# start = time.time()
+# res = indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],[],collectionNombresInitiaux, resultatCible)
+# duree = time.time() - start
+# print("durée indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
+# print("résultat indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+str(res))
+# print(obtenirUneDescriptionDuneSolution(res, collectionNombresInitiaux,resultatCible))
+
+# collectionNombresInitiaux= [1,2,3,4,5,6]
+# resultatCible = 1080
+# start = time.time()
+# res = indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],[],collectionNombresInitiaux, resultatCible)
+# duree = time.time() - start
+# print("durée indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
+# print("résultat indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+str(res))
+# print(obtenirUneDescriptionDuneSolution(res, collectionNombresInitiaux,resultatCible))
+
+
+# collectionNombresInitiaux= [1,2,3,4,5,6]
+# resultatCible = 1080
+# start = time.time()
+# res = listerSequencesSolutions([], collectionNombresInitiaux, resultatCible)
+# duree = time.time() - start
+# print("durée listerSequencesSolutions([], collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
+
 
 collectionNombresInitiaux= [1,2,3,4,5,6]
 resultatCible = 1080
 start = time.time()
-res = indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],[],collectionNombresInitiaux, resultatCible)
+res = indiquerUneSequenceSolutionParExtensionDuneSequence([], collectionNombresInitiaux, resultatCible)
 duree = time.time() - start
-print("durée indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
-print("résultat indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+str(res))
-print(obtenirUneDescriptionDuneSolution(res, collectionNombresInitiaux,resultatCible))
+print("durée indiquerUneSequenceSolutionParExtensionDuneSequence([], collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
+print("résultat indiquerUneSequenceSolutionParExtensionDuneSequence([], collectionNombresInitiaux, resultatCible) : "+str(res))
 
 
-collectionNombresInitiaux= [1,2,3,4,5,6]
-resultatCible = 1080
-start = time.time()
-res = listerSequencesSolutions([], collectionNombresInitiaux, resultatCible)
-duree = time.time() - start
-print("durée listerSequencesSolutions([], collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
 
 
 
