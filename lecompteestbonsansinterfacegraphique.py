@@ -235,7 +235,7 @@ def obtenirUneDescriptionDuneSolution(solution, collectionNombresInitiaux, resul
 
 
 # ==========================
-# INDIQUER LES SÉQUENCES SOLUTIONS
+# CHERCHER DES SOLUTIONS
 # ==========================
 
 def listerSequencesSolutions(sequence, collectionNombresInitiaux, resultatCible):
