@@ -169,6 +169,40 @@ def listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionN
  return res  
 
 
+def compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombresInitiaux, sequence):
+ """
+ Comptabilisation des séquences de calculs élaborables avec une collection de nombres initiaux.
+
+ Requis : 
+ -collectionNombresInitiaux --> une collection de nombres
+ ex : [1,2,3,4,5,6]
+ 
+ Fourni : 
+ -une quantité de sequences de calculs
+ ex: 1, 10, 12654
+
+ >>> compterSequencesCalculsElaborablesParExtensionDuneSequence([1,1,1],[])
+ 186
+ """
+ res = 0
+ collectionNombresDisponibles = listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequence)
+ extensions = listerCalculsElaborablesAvecDeuxDesNombresDuneCollection(collectionNombresDisponibles)
+ cpt = 0
+ while(cpt<len(extensions)):
+  sequenceAgrandie=sequence
+  sequenceAgrandie.append(extensions[cpt])
+  res=res+1
+  
+  estExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
+  if(estExtensible == True): 
+   res=res + compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombresInitiaux, sequenceAgrandie)
+  
+  sequenceAgrandie.pop() 
+  cpt=cpt+1
+ 
+ return res
+
+
 # ==========================
 # INDIQUER LES SÉQUENCES SOLUTIONS
 # ==========================
@@ -214,38 +248,7 @@ def listerSequencesSolutions(sequence, collectionNombresInitiaux, resultatCible)
  return res  
 
 
-def compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombresInitiaux, sequence):
- """
- Comptabilisation des séquences de calculs élaborables avec une collection de nombres initiaux.
-
- Requis : 
- -collectionNombresInitiaux --> une collection de nombres
- ex : [1,2,3,4,5,6]
- 
- Fourni : 
- -une quantité de sequences de calculs
- ex: 1, 10, 12654
-
- >>> compterSequencesCalculsElaborablesParExtensionDuneSequence([1,1,1],[])
- 186
- """
- res = 0
- collectionNombresDisponibles = listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux,sequence)
- extensions = listerCalculsElaborablesAvecDeuxDesNombresDuneCollection(collectionNombresDisponibles)
- cpt = 0
- while(cpt<len(extensions)):
-  sequenceAgrandie=sequence
-  sequenceAgrandie.append(extensions[cpt])
-  res=res+1
   
-  estExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
-  if(estExtensible == True): 
-   res=res + compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombresInitiaux, sequenceAgrandie)
-  
-  sequenceAgrandie.pop() 
-  cpt=cpt+1
- 
- return res  
 
 
 def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequence, sequenceApprochee, collectionNombresInitiaux, resultatCible):
