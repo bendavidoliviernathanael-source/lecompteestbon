@@ -203,6 +203,37 @@ def compterSequencesCalculsElaborablesParExtensionDuneSequence(collectionNombres
  return res
 
 
+def obtenirUneDescriptionDuneSolution(solution, collectionNombresInitiaux, resultatCible):
+ """
+ Production d'une description d'une solution
+
+ Requis :
+ -solution --> une sequence de calculs
+ ex : [[1,1,"+"],[1,2,"+"]]
+ -collectionNombresInitiaux --> une collection de nombres
+ ex : [1,1,1]
+ 
+ Fourni : 
+ -une chaîne de caractères décrivant la solution
+ ex: "[[1,1,"+"],[1,2,"+"]]"
+
+ >>> obtenirUneDescriptionDuneSolution([[1,1,"+"],[1,2,"+"]], [1,1,1],4)
+ "résultat cible : 4 nombres disponibles : [1, 1, 1] sequence de calculs : []\\nrésultat cible : 4 calcul ajouté : 1+1=2 nombres disponibles : [1, 2] sequence de calculs : [[1, 1, '+']]\\nrésultat cible : 4 calcul ajouté : 1+2=3 nombres disponibles : [3] sequence de calculs : [[1, 1, '+'], [1, 2, '+']]\\n"
+ """ 
+ res=""
+ res=res+"résultat cible : "+str(resultatCible)+" nombres disponibles : "+str(collectionNombresInitiaux)+" sequence de calculs : []\n"
+ sequenceCalculs=[]
+ cpt=0
+ while(cpt<len(solution)):
+  calcul=[]
+  copierCalcul(solution[cpt], calcul)
+  sequenceCalculs.append(calcul)
+  collectionNombres = listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux, sequenceCalculs)
+  res=res+"résultat cible : "+str(resultatCible)+" calcul ajouté : "+str(calcul[0])+calcul[2]+str(calcul[1])+"="+str(realiserCalcul(calcul))+" nombres disponibles : "+str(collectionNombres)+" sequence de calculs : "+str(sequenceCalculs) + "\n"  
+  cpt=cpt+1
+ return res
+
+
 # ==========================
 # INDIQUER LES SÉQUENCES SOLUTIONS
 # ==========================
@@ -304,37 +335,6 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
   
  res=sequenceApprochee  
  return res  
-
-
-def obtenirUneDescriptionDuneSolution(solution, collectionNombresInitiaux, resultatCible):
- """
- Production d'une description d'une solution
-
- Requis :
- -solution --> une sequence de calculs
- ex : [[1,1,"+"],[1,2,"+"]]
- -collectionNombresInitiaux --> une collection de nombres
- ex : [1,1,1]
- 
- Fourni : 
- -une chaîne de caractères décrivant la solution
- ex: "[[1,1,"+"],[1,2,"+"]]"
-
- >>> obtenirUneDescriptionDuneSolution([[1,1,"+"],[1,2,"+"]], [1,1,1],4)
- "résultat cible : 4 nombres disponibles : [1, 1, 1] sequence de calculs : []\\nrésultat cible : 4 calcul ajouté : 1+1=2 nombres disponibles : [1, 2] sequence de calculs : [[1, 1, '+']]\\nrésultat cible : 4 calcul ajouté : 1+2=3 nombres disponibles : [3] sequence de calculs : [[1, 1, '+'], [1, 2, '+']]\\n"
- """ 
- res=""
- res=res+"résultat cible : "+str(resultatCible)+" nombres disponibles : "+str(collectionNombresInitiaux)+" sequence de calculs : []\n"
- sequenceCalculs=[]
- cpt=0
- while(cpt<len(solution)):
-  calcul=[]
-  copierCalcul(solution[cpt], calcul)
-  sequenceCalculs.append(calcul)
-  collectionNombres = listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux, sequenceCalculs)
-  res=res+"résultat cible : "+str(resultatCible)+" calcul ajouté : "+str(calcul[0])+calcul[2]+str(calcul[1])+"="+str(realiserCalcul(calcul))+" nombres disponibles : "+str(collectionNombres)+" sequence de calculs : "+str(sequenceCalculs) + "\n"  
-  cpt=cpt+1
- return res
 
 
 
