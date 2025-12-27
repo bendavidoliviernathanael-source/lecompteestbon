@@ -4,8 +4,30 @@ import doctest
 import time
 
 # ==========================
-# CALCULS ET SÉQUENCES DE CALCULS
+# SÉQUENCES DE NOMBRES, CALCULS ET SÉQUENCES DE CALCULS
 # ==========================
+
+def copierSequenceNombres(sequenceNombres,sequence):
+ """
+ Copie d'une séquence de nombres dans une séquence réceptacle
+
+ Requis : 
+ -sequenceNombres --> une séquence de nombres
+ ex : [1,2,5,9]
+ 
+ -sequence --> une séquence
+ ex : []
+
+ Fourni : 
+ 
+ >>> copierSequenceNombres([1,2], [])
+ 
+ """
+ sequence.clear()
+ cpt=0
+ while(cpt<len(sequenceNombres)):
+  sequence.append(sequenceNombres[cpt])
+  cpt=cpt+1
 
 def copierCalcul(calcul,sequence):
  """
@@ -53,27 +75,6 @@ def copierSequenceCalculs(sequenceCalculs,sequence):
   sequence.append(calcul)
   cpt=cpt+1
  
-def copierSequenceNombres(sequenceNombres,sequence):
- """
- Copie d'une séquence de nombres dans une séquence réceptacle
-
- Requis : 
- -sequenceNombres --> une séquence de nombres
- ex : [1,2,5,9]
- 
- -sequence --> une séquence
- ex : []
-
- Fourni : 
- 
- >>> copierSequenceNombres([1,2], [])
- 
- """
- sequence.clear()
- cpt=0
- while(cpt<len(sequenceNombres)):
-  sequence.append(sequenceNombres[cpt])
-  cpt=cpt+1
 
 def listerCalculsElaborablesAvecDeuxDesNombresDuneCollection(collectionNombres):
  """
