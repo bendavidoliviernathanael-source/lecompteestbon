@@ -272,8 +272,10 @@ def indiquerUneSequenceSolutionParExtensionDuneSequence(sequence, collectionNomb
   if(estSolution == True) :
    res=sequenceAgrandie
    return res
-  if(estExtensible == True): 
-   indiquerUneSequenceSolutionParExtensionDuneSequence(sequenceAgrandie, collectionNombresInitiaux, resultatCible)
+  if(estExtensible == True and len(res)==0): 
+   res.extend(indiquerUneSequenceSolutionParExtensionDuneSequence(sequenceAgrandie, collectionNombresInitiaux, resultatCible))
+   if(len(res)>0):
+    return res
   
   sequenceAgrandie.pop() 
   cpt=cpt+1
@@ -424,7 +426,7 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
 
 
 collectionNombresInitiaux= [1,2,3,4,5,6]
-resultatCible = 1081
+resultatCible = 1080
 start = time.time()
 res = indiquerUneSequenceSolutionParExtensionDuneSequence([], collectionNombresInitiaux, resultatCible)
 duree = time.time() - start
