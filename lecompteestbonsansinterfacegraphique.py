@@ -3,7 +3,6 @@ from math import *
 import doctest
 import time
 
-
 # ==========================
 # CALCULS ET SÉQUENCES DE CALCULS
 # ==========================
@@ -197,16 +196,18 @@ def listerSequencesSolutions(sequence, collectionNombresInitiaux, resultatCible)
  extensions = listerCalculsElaborablesAvecDeuxDesNombresDuneCollection(collectionNombresDisponibles)
  cpt = 0
  while(cpt<len(extensions)):
-  sequenceAgrandie = []
-  copierSequenceCalculs(sequence,sequenceAgrandie)
+  sequenceAgrandie=sequence
   sequenceAgrandie.append(extensions[cpt])
+
   estSolution = realiserCalcul(sequenceAgrandie[len(sequenceAgrandie)-1]) == resultatCible
   estExtensible =len(sequenceAgrandie)<(len(collectionNombresInitiaux)-1)
   if(estSolution == True) :
-   res.append(sequenceAgrandie)
+   solution=[]
+   copierSequenceCalculs(sequenceAgrandie,solution)
+   res.append(solution)
   if(estExtensible == True): 
    res.extend(listerSequencesSolutions(sequenceAgrandie, collectionNombresInitiaux, resultatCible))
-  
+  sequenceAgrandie.pop()
   cpt=cpt+1
  
  return res  
@@ -301,6 +302,46 @@ def indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence(sequenc
  return res  
 
 
+def obtenirUneDescriptionDuneSolution(solution, collectionNombresInitiaux, resultatCible):
+ """
+ Production d'une description d'une solution
+
+ Requis :
+ -solution --> une sequence de calculs
+ ex : [[1,1,"+"],[1,2,"+"]]
+ -collectionNombresInitiaux --> une collection de nombres
+ ex : [1,1,1]
+ 
+ Fourni : 
+ -une chaîne de caractères décrivant la solution
+ ex: "[[1,1,"+"],[1,2,"+"]]"
+
+ >>> obtenirUneDescriptionDuneSolution([[1,1,"+"],[1,2,"+"]], [1,1,1],4)
+ "résultat cible : 4 nombres disponibles : [1, 1, 1] sequence de calculs : []\\nrésultat cible : 4 calcul ajouté : 1+1=2 nombres disponibles : [1, 2] sequence de calculs : [[1, 1, '+']]\\nrésultat cible : 4 calcul ajouté : 1+2=3 nombres disponibles : [3] sequence de calculs : [[1, 1, '+'], [1, 2, '+']]\\n"
+ """ 
+ res=""
+ res=res+"résultat cible : "+str(resultatCible)+" nombres disponibles : "+str(collectionNombresInitiaux)+" sequence de calculs : []\n"
+ sequenceCalculs=[]
+ cpt=0
+ while(cpt<len(solution)):
+  calcul=[]
+  copierCalcul(solution[cpt], calcul)
+  sequenceCalculs.append(calcul)
+  collectionNombres = listerNombresDisponiblesApresUneRealisationDuneSequenceDeCalculs(collectionNombresInitiaux, sequenceCalculs)
+  res=res+"résultat cible : "+str(resultatCible)+" calcul ajouté : "+str(calcul[0])+calcul[2]+str(calcul[1])+"="+str(realiserCalcul(calcul))+" nombres disponibles : "+str(collectionNombres)+" sequence de calculs : "+str(sequenceCalculs) + "\n"  
+  cpt=cpt+1
+ return res
+
+
+
+
+
+
+
+
+
+
+
 
 
 # ==========================
@@ -315,7 +356,7 @@ res = indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],[]
 duree = time.time() - start
 print("durée indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
 print("résultat indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+str(res))
-
+print(obtenirUneDescriptionDuneSolution(res, collectionNombresInitiaux,resultatCible))
 
 collectionNombresInitiaux= [1,2,3,4,5,6]
 resultatCible = 1080
@@ -324,8 +365,15 @@ res = indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],[]
 duree = time.time() - start
 print("durée indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
 print("résultat indiquerUneSequenceSolutionApprocheeOuExacteParExtensionDuneSequence([],collectionNombresInitiaux, resultatCible) : "+str(res))
+print(obtenirUneDescriptionDuneSolution(res, collectionNombresInitiaux,resultatCible))
 
 
+collectionNombresInitiaux= [1,2,3,4,5,6]
+resultatCible = 1080
+start = time.time()
+res = listerSequencesSolutions([], collectionNombresInitiaux, resultatCible)
+duree = time.time() - start
+print("durée listerSequencesSolutions([], collectionNombresInitiaux, resultatCible) : "+ str(duree) + " seconde(s)")
 
 
 
